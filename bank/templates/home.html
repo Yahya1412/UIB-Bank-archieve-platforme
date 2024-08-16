@@ -1,0 +1,387 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  {% include 'partials/_messages.html' %}
+  <div class="bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Bienvenue {{ user.username }}</h1>
+          <br>
+          <hr>
+          <br>
+          <h3>Union internationale de banques ou UIB</h3>
+          <br>
+          <p>L'Union internationale de banques (arabe : الإتحاد الدولي للبنوك) ou UIB est une banque commerciale tunisienne à capitaux privés</p>
+        </div>
+        <div class="col-md-4">
+          <img src="{% static 'img/uib2.png' %}" alt="Account Management Site" class="img-fluid">
+        </div>
+      </div>
+    </div>
+    <hr>
+    {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="lineChart" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="barChart" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="pieChart1" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="pieChart2" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="radarChart" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="doughnutChart" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="lineChart2" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-container">
+          <canvas id="barChart2" style="width: 400px; height: 300px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Line chart
+    const lineCtx = document.getElementById('lineChart');
+    new Chart(lineCtx, {
+      type: 'bar',
+      data: {
+        labels: [{% for genre in genre_list %}'{{ genre }}',{% endfor %}],
+        datasets: [{
+          label: 'Distribution des genres des clients',
+          data: [{% for num in nomb_genre_list %}{{ num }},{% endfor %}],
+          backgroundColor: 'rgba(75, 192, 192, 0.2)', // Change background color here
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Bar chart
+    const barCtx = document.getElementById('barChart');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: [{% for client in client %}'{{ client.nom }}',{% endfor %}],
+        datasets: [{
+          label: 'Bar Chart',
+          data: [{% for client in client %}{{ client.revenue_annuel }},{% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)', // Change background color here
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ], // Change background color here
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // First Pie chart
+    const pieCtx1 = document.getElementById('pieChart1');
+    new Chart(pieCtx1, {
+      type: 'pie',
+      data: {
+        labels: [{% for nationalité in nationalité_list %}'{{ nationalité }}',{% endfor %}],
+        datasets: [{
+          label: 'Distribution des nationalité des clients',
+          data: [{% for num in nomb_nationalité_list %}{{ num }},{% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)', // Change background color here
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Second Pie chart
+    const pieCtx2 = document.getElementById('pieChart2');
+    new Chart(pieCtx2, {
+      type: 'doughnut',
+      data: {
+        labels: [{% for type in type_list %}'{{ type }}',{% endfor %}],
+        datasets: [{
+          label: 'Pie Chart 2',
+          data: [{% for num in nomb_type_list %}{{ num }},{% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)', // Change background color here
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Radar chart
+    const radarCtx = document.getElementById('radarChart');
+    new Chart(radarCtx, {
+      type: 'polarArea',
+      data: {
+        labels: [{% for etat in etat_list %}'{{ etat }}',{% endfor %}],
+        datasets: [{
+          label: 'Radar Chart',
+          data: [{% for num in nomb_etat_list %}{{ num }},{% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)', // Change background color here
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ], // Change background color here
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          r: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Doughnut chart
+    const doughnutCtx = document.getElementById('doughnutChart');
+    new Chart(doughnutCtx, {
+      type: 'doughnut',
+      data: {
+        labels: [{% for compte in compte %}'{{ compte.owner }}',{% endfor %}],
+        datasets: [{
+          label: 'Doughnut Chart',
+          data: [{% for compte in compte %}{{ compte.solde }},{% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)', // Change background color here
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Line chart 2
+    const lineCtx2 = document.getElementById('lineChart2');
+    new Chart(lineCtx2, {
+      type: 'line',
+      data: {
+        labels: [{% for depart in depart_list %}'{{ depart }}',{% endfor %}],
+        datasets: [{
+          label: 'Distribution des départements',
+          data: [{% for num in nomb_depart_list %}{{ num }},{% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)', // Change background color here
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ], // Change background color here
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Bar chart 2
+    const barCtx2 = document.getElementById('barChart2');
+    new Chart(barCtx2, {
+      type: 'bar',
+      data: {
+        labels: [{% for uset in uset %}'{{ uset.nom }}',{% endfor %}],
+        datasets: [{
+          label: 'Distribution des salaires des Utilisateurs',
+          data: [{% for uset in uset %}{{ uset.salaire }},{% endfor %}],
+          backgroundColor: [ // Change background color here
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ], // Change background color here
+          borderColor: [
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  {% endif %}
+  <style>
+    h1 {
+      font-size: 50px; /* Ajustez la taille de la police selon vos besoins */
+      text-align:left;
+      margin-top:30px;
+      margin-bot:40px;
+    }
+    h3{
+      padding-left: 80px;
+      font-weight: bold;
+  
+    }
+    .col-md-4{
+      padding-left:200px;
+    }
+   .bg{
+        background-image: url('im1.png');
+        background-size: cover;
+        background-position: center;
+    }
+    p {
+      text-align: left; /* Alignement centré */
+    font-size: 18px;
+    line-height: 2;  /* Taille de police de 16 pixels */
+    }
+  
+    .chart-container {
+      width: 500px;
+      height: 400px;
+      margin-bottom: 20px;
+      display: inline-block; /* Add this line */
+      margin-right: 20px;
+    }
+  
+    @media (max-width: 768px) {
+      .chart-container {
+        width: 100%;
+      }
+    }
+    
+  </style>
+{% endblock %}

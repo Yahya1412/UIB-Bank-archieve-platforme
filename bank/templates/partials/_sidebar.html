@@ -1,0 +1,90 @@
+{% load static %}
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
+    <div class="position-sticky pt-3 sidebar-sticky">
+      <ul class="nav flex-column">
+        
+        <li class="nav-item py-2">
+          <a class="nav-link active" aria-current="page" href="{% url 'home'%}">
+            <span data-feather="home" class="align-text-bottom"></span>
+            Dashboards
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="{% url 'compte'%}">
+            <span data-feather="file" class="align-text-bottom"></span>
+            Comptes Bancaires
+          </a>
+        </li>
+        <li class="nav-item py-2">
+          <a class="nav-link" href="{% url 'user' %}">
+            <span data-feather="shopping-cart" class="align-text-bottom"></span>
+            Utilisateur
+          </a>
+        </li>
+        
+        <li class="nav-item py-2">
+          <a class="nav-link" href="{% url 'client' %}">
+            <span data-feather="shopping-cart" class="align-text-bottom"></span>
+            Clients
+          </a>
+        </li>
+        
+        
+    
+      
+       
+      </ul>
+    </div>
+  </nav>
+  <style type="text/css">
+    #sidebarMenu {
+      padding-top: 3rem;
+      position: sticky;
+      top: 0;
+      background-color:#b5b5b5;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+    }
+
+
+.nav-item {
+  padding-top: 0rem;
+  padding-bot: 0rem;
+  border-bottom: 1px solid #ccc;
+
+  color: white; 
+}
+
+
+.nav-link {
+  color: white;
+  font-size: 18px ;
+}
+
+.nav-link.active {
+  color: var(--bs-primary);
+  font-weight: bold;
+}
+
+.sidebar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+  color: var(--bs-secondary);
+  text-transform: uppercase;
+}
+
+.nav-item.py-2 {
+  padding-bottom: 2rem;
+  color: white;
+}
+
+.nav-link:hover {
+  background-color : #235a8c;
+  color: white;
+}
+
+
+  </style>

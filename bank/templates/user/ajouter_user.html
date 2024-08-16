@@ -1,0 +1,167 @@
+{% extends 'base.html' %} {% block content %}
+<head>
+  <style>
+    .form-group input, select {
+      background-color: lightgrey;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+    .btn-submit {
+      display: inline-block;
+      background-color: #00BFFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  
+    .btn-submit:hover {
+      background-color: #00C853;
+      box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+    }
+    #etatFieldField {
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    #etatFieldField option {
+      background-color: white;
+      color: black;
+    }
+   
+  </style>
+</head>
+
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url 'user'%}">Utilisateur</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Ajouter un Utilisateur</li>
+    </ol>
+  </nav>
+
+  <div class="card">
+    <div class="card-body">
+      <form action="{% url 'ajouter_user' %}" method="post">
+        {% include 'partials/_messages.html'%} 
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="">Identifiant d'utilisateur</label>
+          <input 
+            type="number" 
+            name="ident" 
+            placeholder="Identifiant du Compte"
+            id="identField" 
+            class="form-control form-control-sm"
+            value="{{values.ident}}"/>
+        </div>
+        <div class="form-group">
+          <label for="">Nom du Utilisateur :</label>
+          <input 
+            type="text" 
+            name="nom" 
+            placeholder="Nom du Client"
+            id="nomField"  
+            class="form-control form-control-sm"
+            value="{{values.nom}}"/>
+        </div>
+        <div class="form-group">
+            <label for="">Prénom Utilisateur :</label>
+            <input 
+              type="text" 
+              name="prenom" 
+              placeholder="Prénom du Client"
+              id="prenomField"  
+              class="form-control form-control-sm"
+              value="{{values.prenom}}"/>
+          </div>
+          <div class="form-group">
+            <label for="">Adresse Mail d'utilisateur :</label>
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Adresse mail du Clien"
+              id="emailField"  
+              class="form-control form-control-sm"
+              value="{{values.email}}"/>
+          </div>
+          <div class="form-group">
+            <label for="">Numéro de téléphone :</label>
+            <input 
+              type="number" 
+              name="num_tel" 
+              placeholder="Numéro de téléphone"
+              id="num_telField"  
+              class="form-control form-control-sm"
+              value="{{values.num_tel}}"/>
+          </div>
+          
+        <div class="form-group">
+          <label for="">Genre du Utilisateur:    </label>
+          <select name='genre' id='genreField' class="form-control">
+            {% for genre in genre %}
+            <option name="genre" value="{{genre.name}}">{{genre.name}}</option>
+            {% endfor %}
+          <select>
+        </div>
+        <div class="form-group">
+            <label for="">Département Utilisateur:    </label>
+            <select name='depart' id='departField' class="form-control">
+              {% for depart in depart %}
+              <option name="depart" value="{{depart.name}}">{{depart.name}}</option>
+              {% endfor %}
+            <select>
+          </div>
+          <div class="form-group">
+            <label for="">Salaire d'utilisateur :</label>
+            <input 
+              type="number" 
+              name="salaire" 
+              placeholder="Salaire d'utilisateur"
+              id="salaireField"  
+              class="form-control form-control-sm"
+              value="{{values.salaire}}"/>
+          </div>
+        <div class="form-group">
+            <label for="">Date de naissance d'utilisateur</label>
+            <input 
+              type="date" 
+              name="date_naissance" 
+              placeholder="Date de naissance du Client"
+              id="date_naissanceField"  
+              class="form-control form-control-sm"
+              value="{{values.date_naissance}}"/>
+          </div>
+          <div class="form-group">
+            <label for="">Date de récrutement d'utilisateur</label>
+            <input 
+              type="date" 
+              name="date_recrut" 
+              placeholder="Date de récrutement d'utilisateur"
+              id="date_recrutField"  
+              class="form-control form-control-sm"
+              value="{{values.date_recrut}}"/>
+          </div>
+        <div class="ui inverted segment">
+          <button
+            type="submit"
+            class="ui inverted green basic button btn-submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+

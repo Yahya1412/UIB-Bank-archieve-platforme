@@ -1,0 +1,166 @@
+
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<style>
+  /* Set background color of the page */
+    body {
+      background-color: #d3e7ee; /* Light blue */
+    }
+    
+    /* Set background color and rounded corners for the login box */
+    .col-md-6{
+      padding-left:20px;
+      padding-top:20px;
+
+      background-image: url('https://images.unsplash.com/photo-1565347878134-064b9185ced8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmFua3xlbnwwfHwwfHx8MA%3D%3D');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height:800px;
+      border-radius: 5%;
+    }
+      .card {
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255,0.5);
+        padding: 20px;
+        height:700px;
+      
+    }
+  /* Custom styles */
+  .form-control {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 10px;
+  }
+  
+  .form-control:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .showPasswordToggle {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .submit-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width:200px;
+  }
+  
+  /* Set darker color for not registered button */
+  .not-registered-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .card-body {
+    padding: 10px;
+  }
+  
+  .card {
+    margin-top: 50px;
+  }
+  
+</style>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6"></div>
+
+    <div class="col-md-4">
+<div class="card mt-5">
+  
+
+
+  <div class="card-body">
+    <center><img src="{% static 'img/uib2.png' %}" alt="Project Management Site" class="img-fluid"></center>
+    <div class="card-title py-3">
+        <h4>Créer un nouveau compte </h4>
+      </div>
+
+
+    <form action="{% url 'register' %}" method="post">
+       {% csrf_token %} 
+       {% include 'partials/_messages.html' %}
+        <div class="form-group py-2">
+            <input 
+            type="text" 
+            name="username" 
+            placeholder="Username"
+            id="usernameField" 
+            class="form-control form-control-sm"/>
+        </div>
+        <div class="invalid-feedback" style="display:none">
+           
+        </div>
+        <p class="text-sm text-success usernamesuccessOutput"></p>
+
+        <div class="form-group py-2">
+            <input 
+            type="email" 
+            name="email" 
+            placeholder="Email"
+            id="emailField" 
+            class="form-control form-control-sm"/>
+        </div>
+        <div class="emailFeedbackArea" style="display:none">
+        </div>
+        <p class="text-sm text-success emailsuccessOutput"></p>
+        <div class="form-group py-2">
+            <div style="position: relative;">
+              <input 
+                type="password" 
+                name="password" 
+                placeholder="Password"
+                id="passwordField" 
+                class="form-control form-control-sm"/>
+                <small class="float-right py-3 showPasswordToggle">SHOW</small>
+            </div>
+          </div>
+          
+        <div style="text-align: center;" class="p-3">
+            <input type="submit" value="Register" class="btn btn-block btn-primary submit-btn"/>
+        </div>
+        <a href="{% url 'login'%}"<input type="text" value="login"/>Se Connecter</a></br>
+        <a href="{% url 'password_reset'%}"<input type="text" value="login"/>Mot de Passe Oublié</a></br>
+        
+       
+      
+    </form>
+</div>
+
+  </div>
+</div>
+
+
+    </div>
+    <div class="col-md-4"></div>
+</div>
+    
+<script src="{% static 'js/register.js/' %}"></script>
+
+</body>
+
+</html>
+
+
+{% endblock content %}
